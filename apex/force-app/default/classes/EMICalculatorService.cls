@@ -5,7 +5,7 @@ global with sharing class EMICalculatorService {
 
 	private static final String END_POINT = 'https://fakegetloanrate.com/compare';
 	private static final String USER_NAME = 'fakeuser@example.com';
-
+        private static final String API_KEY = 'f87f926a-d50a-4e70-ac15-379bbc7a2010';
 	/**
 	 * API method to calculate EMI.
 	 */
