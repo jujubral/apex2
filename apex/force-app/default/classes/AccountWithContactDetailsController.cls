@@ -1,29 +1,34 @@
-public with sharing class AccountWithContactDetailsController {
-	private Id accountId;
-	public List<Contact> ConDetails { get; set; }
+public with sharing class AccountWithOppsDetailsController {
 
-	public AccountWithContactDetailsController(ApexPages.StandardController sc) {
-		accountId = sc.getId();
-		getRelatedContactDetails();
+	private Id accountId;
+	public List<Opportunity> OppDetails { get; set; }
+
+	public AccountWithOppsDetailsController(ApexPages.StandardController controller) {
+		accountId = controller.getId();
+		getRelatedOpportunities();
 	}
 
-	private void getRelatedContactDetails() {
-		checkReadAccess();
+	private void getRelatedOpportunities() {
+		permissionChecks();
 
-		ConDetails = [SELECT FirstName, LastName, Email, Phone
-					  FROM Contact 
+		OppDetails = [SELECT Name, Amount, StageName, CloseDate, NextStep 
+					  FROM Opportunity 
 					  WHERE AccountId = :accountId];
 	}
 
-	private void checkReadAccess() {
-		// security read access for Contact SObjectType
-		PermissionChecker.checkPermissionAndThrowException(Contact.SObjectType, PermissionChecker.Intent.READ);
+	private void permissionChecks() {
+		PermissionChecker.Intent oprnType = PermissionChecker.Intent.READ;
+		SobjectType objType = Opportunity.SObjectType;
 
-		// security read access for Contact fields queried
-		PermissionChecker.checkPermissionAndThrowException(Contact.SObjectType, Contact.FirstName, PermissionChecker.Intent.READ);
-		PermissionChecker.checkPermissionAndThrowException(Contact.SObjectType, Contact.LastName, PermissionChecker.Intent.READ);
-		PermissionChecker.checkPermissionAndThrowException(Contact.SObjectType, Contact.Email, PermissionChecker.Intent.READ);
-		PermissionChecker.checkPermissionAndThrowException(Contact.SObjectType, Contact.Phone, PermissionChecker.Intent.READ);
+		// check read access on Opportunity SObject
+		PermissionChecker.checkPermissionAndThrowException(objType, oprnType);
+
+		// check read on Opportunity Fields queried
+		PermissionChecker.checkPermissionAndThrowException(objType, Opportunity.Name, oprnType);
+		PermissionChecker.checkPermissionAndThrowException(objType, Opportunity.Amount, oprnType);
+		PermissionChecker.checkPermissionAndThrowException(objType, Opportunity.StageName, oprnType);
+		PermissionChecker.checkPermissionAndThrowException(objType, Opportunity.CloseDate, oprnType);
+		PermissionChecker.checkPermissionAndThrowException(objType, Opportunity.NextStep, oprnType);
 	}
 
 }
