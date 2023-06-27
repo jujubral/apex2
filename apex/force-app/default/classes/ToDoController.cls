@@ -22,16 +22,7 @@ public with sharing class ToDoController {
 			return;
 		}
 
-		Apexpages.addMessage(new ApexPages.message(
-			Apexpages.Severity.CONFIRM,
-			String.format(
-				'Task: <a title="{0}" href="/{1}">{0}</a> created !',
-				new List<String>{
-					sanitizeHtml(newItem.Summary__c),
-					newItem.Id
-				}
-			)
-		));
+		Apexpages.addMessage(new ApexPages.message(Apexpages.Severity.CONFIRM,'Task: <b>' + newItem.Summary__c + '</b> created !'));
 		init();
 	}
 
@@ -71,11 +62,6 @@ public with sharing class ToDoController {
 		ToDoList = itemsById.values();
 	}
 
-	// replace < and > into their equivalent html encoded entities
-	private String sanitizeHtml(String rawString) {
-		return rawString.replace('<', '&lt;').replace('>', '&gt;');
-	}
-
 	/**
 	 * Wrapper class to hold ToDoItem record details
 	 */
@@ -86,8 +72,9 @@ public with sharing class ToDoController {
 
 		public ToDoItem(Id itemId, String summary, Boolean isComplete){
 			this.ItemId = itemId;
+			// sanitize the summary for only HTML entities
 			if(isComplete) {
-				summary = '<s>' + summary + '</s>';
+				summary = '<s>' + summary.escapeHtml4() + '</s>';
 			}
 			this.Summary = summary;
 			this.IsComplete = isComplete;
