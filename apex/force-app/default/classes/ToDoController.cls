@@ -67,7 +67,7 @@ public with sharing class ToDoController {
 	 */
 	public class ToDoItem {
 		public Id ItemId {get; set;}
-		public String Summary{ get; set; }
+		public String Summary{ get; set;}
 		public Boolean IsComplete { get; set; }
 
 		public ToDoItem(Id itemId, String summary, Boolean isComplete){
