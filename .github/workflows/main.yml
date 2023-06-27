@@ -1,13 +1,11 @@
-name: CI
+name: CI (Continuous Integration)
 on:
  push:
-   branches: [ master ]
+   branches: [ main ]
  pull_request:
-   branches: [ master ]
-   
-
+   branches: [ main ]
 jobs:
- conviso-sast:
+ conviso-sast-cr-sca-ast:
    runs-on: ubuntu-latest
    container:
      image: convisoappsec/flowcli
@@ -17,6 +15,11 @@ jobs:
        FLOW_API_URL: ${{secrets.HOMOLOGA_URL}}
    steps:
    - uses: actions/checkout@v3
-
-   - name: Run SAST
+   - name: Run SAST (Static Application Security Testing)
      run: conviso sast run
+   - name: Run CR (Code Review)
+     run: conviso deploy create with values
+   - name: Run SCA (Software Composition Analysis)
+     run: conviso sca run
+   - name: Run AST (Application Security Testing)
+     run: conviso ast run
