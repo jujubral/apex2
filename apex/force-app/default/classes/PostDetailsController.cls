@@ -35,17 +35,9 @@ public with sharing class PostDetailsController {
 		Comment__c comment = new Comment__c();
 
 		if(String.isBlank(commentToEditOrDelete)) {
-			// security check for create access
-			PermissionChecker.checkPermissionAndThrowException(Comment__c.SObjectType, PermissionChecker.Intent.CREATE);
-			PermissionChecker.checkPermissionAndThrowException(Comment__c.SObjectType, Comment__c.Content__c, PermissionChecker.Intent.CREATE);
-
 			detail = commentMap.get(newRecordIdentifier);
 			NewsAnnouncementsService.addComment(postId, detail.content);
 		} else {
-			// security check for edit/update access
-			PermissionChecker.checkPermissionAndThrowException(Comment__c.SObjectType, PermissionChecker.Intent.EDIT);
-			PermissionChecker.checkPermissionAndThrowException(Comment__c.SObjectType, Comment__c.Content__c, PermissionChecker.Intent.EDIT);
-
 			detail = commentMap.get(commentToEditOrDelete);
 			NewsAnnouncementsService.updateComment(commentToEditOrDelete, detail.content); 
 		}
@@ -56,9 +48,6 @@ public with sharing class PostDetailsController {
 	}
 
 	public void handleDeleteClick() {
-		// Security check for Delete access
-		PermissionChecker.checkPermissionAndThrowException(Comment__c.SObjectType, PermissionChecker.Intent.DEL);
-
 		NewsAnnouncementsService.deleteComment(commentToEditOrDelete);
 
 		fetchCommentdetails();
@@ -72,7 +61,7 @@ public with sharing class PostDetailsController {
 		// Security check for read access
 		PermissionChecker.checkPermissionAndThrowException(Comment__c.SObjectType, PermissionChecker.Intent.READ);
 		PermissionChecker.checkPermissionAndThrowException(Comment__c.SObjectType, Comment__c.Content__c, PermissionChecker.Intent.READ);
-
+		
 		commentMap = new Map<String, CommentDetail>();
 		List<Comment__c> comments = NewsAnnouncementsService.fetchComments(postId);
 
