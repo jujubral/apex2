@@ -22,7 +22,16 @@ public with sharing class ToDoController {
 			return;
 		}
 
-		Apexpages.addMessage(new ApexPages.message(Apexpages.Severity.CONFIRM,'Task: <b>' + newItem.Summary__c + '</b> created !'));
+		Apexpages.addMessage(new ApexPages.message(
+			Apexpages.Severity.CONFIRM,
+			String.format(
+				'Task: <a title="{0}" href="/{1}">{0}</a> created !',
+				new List<String>{
+					sanitizeHtml(newItem.Summary__c),
+					newItem.Id
+				}
+			)
+		));
 		init();
 	}
 
@@ -60,6 +69,11 @@ public with sharing class ToDoController {
 		}
 
 		ToDoList = itemsById.values();
+	}
+
+	// replace < and > into their equivalent html encoded entities
+	private String sanitizeHtml(String rawString) {
+		return rawString.replace('<', '&lt;').replace('>', '&gt;');
 	}
 
 	/**
