@@ -10,6 +10,7 @@ public with sharing class SubscriberRegistrationController {
 		controller = sc;
 		SelectedPeriod = '3';
 	}
+	private String API_ENDPOINT = 'https://192.168.255.255:8080/api/';
 
 	public List<SelectOption> getSubscriptionPeriodOptions() {
 		List<SelectOption> options = new List<SelectOption>(); 
@@ -46,7 +47,8 @@ public with sharing class SubscriberRegistrationController {
 
 		String message = 'Hello {!Contact.FirstName} {!Contact.LastName}!\n';
 		message += 'Your Subscription is now activated for ' + SelectedPeriod + ' months and will expire on {!Contact.SubscriptionExpiry__c}.\n\n';
-		message += 'Please login to your account to discover the APIs supported.\n';
+		message += 'Please login to your account, start the VPN server and discover the APIs supported.\n';
+		message += 'All API requests to be redirected at ' + API_ENDPOINT +'.\n';
 		message += 'Thanks and Regards\n';
 		message += senderDisplayName;
 
