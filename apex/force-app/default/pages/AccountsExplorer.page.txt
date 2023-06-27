@@ -1,0 +1,23 @@
+<apex:page standardController="Account" recordSetVar="accounts" extensions="AccountsExplorerController" lightningStylesheets="true">
+	<apex:form >
+		<apex:sectionHeader title="Account with Opportunities and Contacts"/>
+		<apex:pageBlock>
+			<center >
+				<apex:pageBlockTable value="{!accounts}" var="account">
+					<apex:column headerValue="Name">
+						<apex:outputField value="{!account.Name}" />
+					</apex:column>
+					<apex:column headerValue="Industry">
+						<apex:outputField value="{!account.Industry}" />
+					</apex:column>
+					<apex:column headerValue="Explore Opportunities">
+						<apex:outputLink value="/apex/AccountWithOppsDetails?id={!account.Id}">Explore</apex:outputLink>
+					</apex:column>
+					<apex:column headerValue="Explore Contacts">
+						<apex:outputLink value="/apex/AccountWithContactDetails?id={!account.Id}">Explore</apex:outputLink>
+					</apex:column>
+				</apex:pageBlockTable>
+			</center>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

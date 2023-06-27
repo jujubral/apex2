@@ -1,0 +1,22 @@
+<apex:page standardController="Contact" extensions="SubscriberRegistrationController" lightningStylesheets="true">
+	<apex:form >
+		<apex:pageMessages />
+		<apex:pageBlock rendered="{! NOT(SubscriptionSaved || Error)}">
+			<apex:pageBlockSection columns="2" title="Choose subscription period" >
+				<apex:selectRadio value="{!SelectedPeriod}">
+					<apex:selectOptions value="{!SubscriptionPeriodOptions}"/>
+				</apex:selectRadio>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="2" title="Basic Details">
+				<apex:inputField value="{!Contact.FirstName}" required="true"/>
+				<apex:inputField value="{!Contact.LastName}" required="true"/>
+				<apex:inputField value="{!Contact.BirthDate}" required="true" />
+				<apex:inputField value="{!Contact.Email}" required="true"/>
+				<apex:inputField value="{!Contact.Phone}"/>
+			</apex:pageBlockSection>
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton value="Subscribe" action="{!saveSubscription}" />
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,8 @@
+<apex:page standardController="Account" extensions="AccountOppsChartController" lightningStylesheets="true">
+	<apex:pageBlock title="Opportunity Information - Graphical">
+		<apex:chart height="600" width="600" data="{!OppDetails}">
+			<apex:pieSeries dataField="Amount" labelField="Name"/>
+			<apex:legend position="right"/>
+		</apex:chart>
+	</apex:pageBlock>
+</apex:page>

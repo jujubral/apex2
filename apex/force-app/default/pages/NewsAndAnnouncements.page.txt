@@ -1,0 +1,20 @@
+<apex:page standardController="Post__c" recordSetVar="posts" extensions="NewsAndAnnouncementsController" lightningStylesheets="true">
+	<apex:form >
+		<apex:sectionHeader title="News And Announcements"/>
+		<center>
+			<apex:pageBlock>
+				<apex:pageBlockTable value="{!posts}" var="post">
+					<apex:column headerValue="Summary">
+						<apex:outputField value="{!post.Name}" />
+					</apex:column>
+					<apex:column headerValue="Posted By">
+						<apex:outputField value="{!post.CreatedBy.Name}" />
+					</apex:column>
+					<apex:column headerValue="Details">
+						<apex:outputLink value="/apex/PostDetails?id={!post.Id}">See Details</apex:outputLink>
+					</apex:column>
+				</apex:pageBlockTable>
+			</apex:pageBlock>
+		</center>
+	</apex:form>
+</apex:page>
